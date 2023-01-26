@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 
 namespace servicio.modelos
 {
+    //MODELO DE DATOS PARA LAS SUCURSALES
+    //25-01-2023
     public class Sucursales
     {
         public int Id { get; set; }
