@@ -41,7 +41,7 @@ namespace servicio.Controllers
             });
 
             return sucursales;
-        } //retorno todo los clientes
+        } //RETORNA TODAS LAS SUCURSALES
 
     }
 }
