@@ -24,6 +24,8 @@ namespace servicio.Controllers
 
             sucursales.ForEach(x =>
             {
+                x.id_cliente = x.id_cliente == null ? null : x.id_cliente.Trim();
+
                 //x.Codigo = x.Codigo == null ? null : x.Codigo.Trim();
                 //x.Cliente = x.Cliente == null ? null : x.Cliente.Trim();
                 //x.Nrc = x.Nrc == null ? null : x.Nrc.Trim();
