@@ -24,6 +24,7 @@ namespace servicio
         public DbSet<App_visitas> app_visitas { get; set; }
         public DbSet<App_visitas_fotos> app_visitas_fotos { get; set; }
         public DbSet<Empleados> empleados { get; set; }
+        public DbSet<Sucursales> Clientes_sucursales { get; set; }
 
         //aqui se registran los modelos para relacionarlos con las tablas de la base
     }
