@@ -10,7 +10,7 @@ namespace servicio.modelos
     public class Sucursales
     {
         public int Id { get; set; }
-        public string id_cliente { get; set; }
+        public int id_cliente { get; set; }
         public string codigo_sucursal { get; set; }
         public string nombre_sucursal { get; set; }
         public string direccion { get; set; }
