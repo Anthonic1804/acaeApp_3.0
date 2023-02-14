@@ -126,9 +126,10 @@ namespace servicio.Controllers
                         num_hoja_de_carga = Convert.ToDecimal(0),
                         Codigo_cliente = datoscliente.Codigo,
                         Cliente = cliente.Cliente,
-                        Id_sucursal = 0,
-                        Codigo_sucursal = "",
-                        Sucursal = "",
+                        Id_sucursal = cliente.IdSucursal, //AGREGANDO EL ID SUCURSAL
+                        Codigo_sucursal = cliente.CodigoSucursal, // AGREGANDO EL CODIGO SUCURSAL
+                        Sucursal = cliente.NombreSucursal, // AGREGANDO EL NOMBRE SUCURSAL
+                        TipoEnvio = cliente.TipoEnvio, // AGREGANDO EL TIPO DE ENVIO
                         Cliente_de_costo = "N",
                         Cliente_mayorista = "N",
                         Categoria_cliente = datoscliente.Categoria_cliente,
@@ -216,7 +217,8 @@ namespace servicio.Controllers
                         Envio_ruta = 'N',
                         Status_envio = "",
                         Descuento_gas = Convert.ToDecimal(0),
-                        Id_app_visita = cliente.Idapp
+                        Id_app_visita = cliente.Idapp,
+
                     };
                     return cabezera;
                 }
@@ -239,9 +241,10 @@ namespace servicio.Controllers
                         num_hoja_de_carga = Convert.ToDecimal(0),
                         Codigo_cliente = "",
                         Cliente = cliente.Cliente,
-                        Id_sucursal = 0,
-                        Codigo_sucursal = "",
-                        Sucursal = "",
+                        Id_sucursal = cliente.IdSucursal, //AGREGANDO EL ID SUCURSAL
+                        Codigo_sucursal = cliente.CodigoSucursal, // AGREGANDO EL CODIGO SUCURSAL
+                        Sucursal = cliente.NombreSucursal, // AGREGANDO EL NOMBRE SUCURSAL
+                        TipoEnvio = cliente.TipoEnvio, // AGREGANDO EL TIPO DE ENVIO
                         Cliente_de_costo = "N",
                         Cliente_mayorista = "N",
                         Categoria_cliente = "",
