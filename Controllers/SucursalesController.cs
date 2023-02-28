@@ -25,7 +25,7 @@ namespace servicio.Controllers
             sucursales.ForEach(x =>
             {
                 x.codigo_sucursal = x.codigo_sucursal == null ? null : x.codigo_sucursal.Trim();
-                x.nombre_sucursal = x.nombre_sucursal == null ? null : x.codigo_sucursal.Trim();
+                x.nombre_sucursal = x.nombre_sucursal == null ? null : x.nombre_sucursal.Trim();
                 x.direccion = x.direccion == null ? null : x.direccion.Trim();
                 x.municipio = x.municipio == null ? null : x.municipio.Trim();
                 x.departamento = x.departamento == null ? null : x.municipio.Trim();
