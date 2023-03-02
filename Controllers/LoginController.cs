@@ -39,19 +39,19 @@ namespace servicio.Controllers
                     context.SaveChanges();
 
                     return StatusCode(StatusCodes.Status200OK,
-                        new RespuestaLogin { Error = validacion.Id, Response = "Credenciales validas", Identidad = validacion.Identidad_App, Estado = validacion.Estado_App });
+                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = validacion.Identidad_App, Estado = validacion.Estado_App });
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
+                       new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
                 }
 
             }
             else
             {
                 return StatusCode(StatusCodes.Status204NoContent,
-                        new RespuestaLogin { Error = 500, Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
+                        new RespuestaLogin { Error = 500, nombreEmpleado = "", Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
             }
         } //login del usuario 
 
@@ -80,7 +80,7 @@ namespace servicio.Controllers
                 {
 
                     return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
+                       new RespuestaLogin { Error = 0, nombreEmpleado="", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
 
                     sesiones_activas++;
                 }
@@ -89,7 +89,7 @@ namespace servicio.Controllers
                 if (sesiones_activas > config.App_max_licencias)
                 {
                     return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, Response = "Se ha llegado al maximo de sesiones activas", Identidad = "", Estado = "" });
+                       new RespuestaLogin { Error = 0, nombreEmpleado="", Response = "Se ha llegado al maximo de sesiones activas", Identidad = "", Estado = "" });
                 }
                 else
                 {
@@ -98,19 +98,19 @@ namespace servicio.Controllers
                         var Identidad_env = validacion.Identidad_App == null ? "" : validacion.Identidad_App;
                         var Estado_env = validacion.Estado_App == null ? "" : validacion.Estado_App;
                         return StatusCode(StatusCodes.Status200OK,
-                            new RespuestaLogin { Error = validacion.Id, Response = "Credenciales validas", Identidad = Identidad_env, Estado = Estado_env });
+                            new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, Estado = Estado_env });
                     }
                     else
                     {
                         return StatusCode(StatusCodes.Status200OK,
-                           new RespuestaLogin { Error = 0, Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
+                           new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
                     }
                 }
             }
             else
             {
                 return StatusCode(StatusCodes.Status204NoContent,
-                        new RespuestaLogin { Error = 500, Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
+                        new RespuestaLogin { Error = 500, nombreEmpleado = "", Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
             }
         } // ver estado de login del usuario 
 
@@ -164,18 +164,18 @@ namespace servicio.Controllers
                     context.SaveChanges();
 
                     return StatusCode(StatusCodes.Status200OK,
-                        new RespuestaLogin { Error = validacion.Id, Response = "Credenciales validas", Identidad = Identidad_env, Estado = Estado_env });
+                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, Estado = Estado_env });
                 }
                 else
                 {
                     return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
+                       new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
                 }
             }
             else
             {
                 return StatusCode(StatusCodes.Status204NoContent,
-                        new RespuestaLogin { Error = 500, Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
+                        new RespuestaLogin { Error = 500, nombreEmpleado = "", Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
             }
         } // ver estado de login del usuario 
     }
