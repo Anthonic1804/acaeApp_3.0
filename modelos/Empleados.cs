@@ -49,5 +49,6 @@ namespace servicio.modelos
         public string? Estado_App { get; set; }
         public DateTime? Ultima_Conexion_App { get; set; }
         public Boolean? Todos_clientes_App { get; set; }
+        public int? Generar_Token { get; set; }
     }
 }
