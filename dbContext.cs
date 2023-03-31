@@ -26,6 +26,7 @@ namespace servicio
         public DbSet<Empleados> empleados { get; set; }
         public DbSet<Sucursales> Clientes_sucursales { get; set; }
         public DbSet<UpdateApp> updateVersionApp { get; set; }
+        public DbSet<Token> tokensapp { get; set; }
 
         //aqui se registran los modelos para relacionarlos con las tablas de la base
     }
