@@ -69,7 +69,7 @@ namespace servicio.Controllers
 
                         } //ingreso todo el detalle del pedido
                         cabezera.Utilidad = this.getUtilidad(data.detalle, iva); //se obtine la utilidad total
-
+                         
                         context.SaveChanges();
                         transaccion.Commit();
                         return StatusCode(StatusCodes.Status201Created, new Respuesta { Error = cabezera.Id, Response = "Pedido Procesado Exitosamente" });

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using servicio.custom;
 using servicio.modelos;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace servicio
         public DbSet<Empleados> empleados { get; set; }
         public DbSet<Sucursales> Clientes_sucursales { get; set; }
         public DbSet<UpdateApp> updateVersionApp { get; set; }
-
+        public DbSet<Token> TokensApp { get; set; }
         //aqui se registran los modelos para relacionarlos con las tablas de la base
     }
 }
