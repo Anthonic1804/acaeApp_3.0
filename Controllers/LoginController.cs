@@ -39,7 +39,7 @@ namespace servicio.Controllers
                     context.SaveChanges();
 
                     return StatusCode(StatusCodes.Status200OK,
-                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = validacion.Identidad_App, Estado = validacion.Estado_App });
+                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = validacion.Identidad_App, GeneraToken = validacion.Generar_Token, Estado = validacion.Estado_App });
                 }
                 else
                 {
@@ -98,7 +98,7 @@ namespace servicio.Controllers
                         var Identidad_env = validacion.Identidad_App == null ? "" : validacion.Identidad_App;
                         var Estado_env = validacion.Estado_App == null ? "" : validacion.Estado_App;
                         return StatusCode(StatusCodes.Status200OK,
-                            new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, Estado = Estado_env });
+                            new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, GeneraToken = validacion.Generar_Token, Estado = Estado_env });
                     }
                     else
                     {
@@ -164,7 +164,7 @@ namespace servicio.Controllers
                     context.SaveChanges();
 
                     return StatusCode(StatusCodes.Status200OK,
-                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, Estado = Estado_env });
+                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", GeneraToken = validacion.Generar_Token, Identidad = Identidad_env, Estado = Estado_env });
                 }
                 else
                 {

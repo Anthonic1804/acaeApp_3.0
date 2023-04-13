@@ -11,6 +11,7 @@ namespace servicio.modelos
         public string Response { get; set; } // RESPUESTA DE LA TRANSACCION
         public string nombreEmpleado { get; set; } // NOMBRE DEL VENDEDOR
         public string Identidad { get; set; } // NOMBRE DEL DISPOSITIVO
+        public int? GeneraToken { get; set; }//USUARIO QUE PUEDE AUTORIZAR MODIFICACION DE PRECIOS
         public string Estado { get; set; }
     }
 }
