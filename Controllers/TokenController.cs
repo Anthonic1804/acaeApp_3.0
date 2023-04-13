@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using servicio.custom;
 using servicio.modelos;
 
@@ -67,7 +64,7 @@ namespace servicio.Controllers
                 {
                     try
                     {
-                        var updateToken = context.TokensApp.FirstOrDefault(x => x.Id == datos.Id);
+                        var updateToken = context.TokensApp.FirstOrDefault(x => x.Id_empleado == datos.Id_empleado && x.Cod_producto == datos.Cod_producto && x.Token_utilizado == 0);
                         if (updateToken != null)
                         {
                             updateToken.Token_utilizado = 1;
@@ -98,29 +95,41 @@ namespace servicio.Controllers
         }//ACTUALIZANDO EL TOKEN YA UTILIZADO
 
 
-        [HttpGet("{id_empleado}/{cod_producto}")]
-        public async Task<ActionResult<List<Token>>> GetToken(int id_empleado, string cod_producto)
+        [HttpPost("search")]
+        public IActionResult PostSearch([FromBody] Token datos)
         {
 
-            List<Token> busqueda = await context.TokensApp.Where(x => x.Id_empleado == id_empleado && x.Cod_producto == cod_producto && x.Token_utilizado == 0).ToListAsync();
-            if (busqueda.Count > 0) {
-
-                decimal precio = 0;
-                foreach (Token elemento in busqueda)
+            if (datos != null)
+            {
+                using (var transaccion = context.Database.BeginTransaction())
                 {
-                    precio = elemento.Precio_asig;
-                    break;
+                    try
+                    {
+                        var searchToken = context.TokensApp.FirstOrDefault(x => x.Id_empleado == datos.Id_empleado && x.Cod_producto == datos.Cod_producto && x.Token_utilizado == 0);
+                        if (searchToken != null)
+                        {
+                            return StatusCode(StatusCodes.Status201Created,
+                            new RespuestaToken { id_token = searchToken.Id, response = "SEARCH_TOKEN_OK", Precio_asig = searchToken.Precio_asig });
+                        }
+                        else
+                        {
+                            return StatusCode(StatusCodes.Status400BadRequest,
+                            new RespuestaToken { id_token = 500, response = "SEARCH_TOKEN_ERROR" });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return StatusCode(StatusCodes.Status400BadRequest,
+                        new RespuestaToken { id_token = 500, response = "SEARCH_TOKEN_ERROR" });
+                    }
                 }
-
-                return StatusCode(StatusCodes.Status201Created,
-                new RespuestaToken { Precio_asig = precio, response = "SEARCH_TOKEN_OK" });
-
             }
+            else
             {
                 return StatusCode(StatusCodes.Status400BadRequest,
-                new RespuestaToken { response = "SEARCH_TOKEN_ERROR" });
+                new RespuestaToken { id_token = 400, response = "SEARCH_TOKEN_ERROR" });
             }
 
-        }//ENCONTRADO EL PRECIO ASIGNADO PARA EL CLIENTE POR VENDEDOR Y PRODUCTO.
+        }//ENCONTRADO EL PRECIO ASIGNADO PARA EL CLIENTE POR VENDEDOR Y PRODUCTO. 
     }
 }
