@@ -31,15 +31,25 @@ namespace servicio.Controllers
                 if (validacion != null)
                 {
                     var fecha_actual = DateTime.Now;
+                    var respuestaLogin = "";
 
-                    //var insert = context.empleados.in
-                    validacion.Identidad_App = credenciales.Identidad;
-                    validacion.Estado_App = "ACTIVO";
-                    validacion.Ultima_Conexion_App = fecha_actual;
-                    context.SaveChanges();
+                    //COMPROBACION DE MOVIL SOLO PARA DISPOSITIVOS AUTORIZADOS POR LA EMPRESA
+                    if (validacion.Identidad_App == null || validacion.Identidad_App == credenciales.Identidad)
+                    {
+                        validacion.Identidad_App = credenciales.Identidad;
+                        validacion.Estado_App = "ACTIVO";
+                        validacion.Ultima_Conexion_App = fecha_actual;
+                        context.SaveChanges();
+                        respuestaLogin = "Credenciales validas";
+                    }
+                    else {
+                        respuestaLogin = "Dispositivo no Autorizado";
+                        validacion.Estado_App = "INACTIVO";
+                        context.SaveChanges();
+                    }
 
                     return StatusCode(StatusCodes.Status200OK,
-                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = validacion.Identidad_App, GeneraToken = validacion.Generar_Token, Estado = validacion.Estado_App });
+                        new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = respuestaLogin, Identidad = validacion.Identidad_App, GeneraToken = validacion.Generar_Token, Estado = validacion.Estado_App });
                 }
                 else
                 {
