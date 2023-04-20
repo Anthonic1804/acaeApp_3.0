@@ -111,76 +111,115 @@ namespace servicio.Controllers
             }
         } //login del usuario 
 
+        //[HttpPost("estado")]
+        //public IActionResult PostEstado([FromBody] Login credenciales)
+        //{
+        //    if (credenciales != null)
+        //    {
+
+        //        // VERIFICAR SI SE SOBREPASA EL NUMERO MAXIMO DE SESIONES PERMITIDAS
+        //        var config = context.config.First();
+        //        var sesiones_activas = context.empleados.Count(x => x.Estado_App.Trim() == "ACTIVO");
+        //        var respuestaLogin = "";
+
+        //        var validacion = context.empleados.Where(e => e.Usuario_App.Trim().ToUpper() == credenciales.Usuario && e.Clave_App == credenciales.Clave).FirstOrDefault();
+
+        //        if (validacion.Identidad_App != null && validacion.Identidad_App != credenciales.Identidad)
+        //        {
+        //            validacion.Estado_App = "INACTIVO";
+        //            context.SaveChanges();
+
+        //            respuestaLogin = "Dispositivo no autorizado";
+
+        //            return StatusCode(StatusCodes.Status200OK,
+        //               new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = respuestaLogin, Identidad = "", Estado = "" });
+        //        }
+
+        //        if (validacion != null)
+        //        {
+        //            var estado = validacion.Estado_App == null ? "" : validacion.Estado_App.Trim();
+
+        //            if (estado != "ACTIVO")
+        //            {
+        //                sesiones_activas++;
+        //            }
+        //        }
+        //        else
+        //        {
+
+        //            return StatusCode(StatusCodes.Status200OK,
+        //               new RespuestaLogin { Error = 0, nombreEmpleado="", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
+
+        //            sesiones_activas++;
+        //        }
+
+
+        //        if (sesiones_activas > config.App_max_licencias)
+        //        {
+        //            return StatusCode(StatusCodes.Status200OK,
+        //               new RespuestaLogin { Error = 0, nombreEmpleado="", Response = "Se ha llegado al maximo de sesiones activas", Identidad = "", Estado = "" });
+        //        }
+        //        else
+        //        {
+        //            if (validacion != null)
+        //            {
+        //                var Identidad_env = validacion.Identidad_App == null ? "" : validacion.Identidad_App;
+        //                var Estado_env = validacion.Estado_App == null ? "" : validacion.Estado_App;
+        //                return StatusCode(StatusCodes.Status200OK,
+        //                    new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, GeneraToken = validacion.Generar_Token, Estado = Estado_env });
+        //            }
+        //            else
+        //            {
+        //                return StatusCode(StatusCodes.Status200OK,
+        //                   new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
+        //            }
+        //        }
+        //    }
+        //    else
+        //    {
+        //        return StatusCode(StatusCodes.Status204NoContent,
+        //                new RespuestaLogin { Error = 500, nombreEmpleado = "", Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
+        //    }
+        //} // ver estado de login del usuario 
+
         [HttpPost("estado")]
-        public IActionResult PostEstado([FromBody] Login credenciales)
+        public async Task<IActionResult> PostEstado([FromBody] Login credenciales)
         {
-            if (credenciales != null)
+            if (credenciales == null)
             {
-
-                // VERIFICAR SI SE SOBREPASA EL NUMERO MAXIMO DE SESIONES PERMITIDAS
-                var config = context.config.First();
-                var sesiones_activas = context.empleados.Count(x => x.Estado_App.Trim() == "ACTIVO");
-                var respuestaLogin = "";
-
-                var validacion = context.empleados.Where(e => e.Usuario_App.Trim().ToUpper() == credenciales.Usuario && e.Clave_App == credenciales.Clave).FirstOrDefault();
-
-                if (validacion.Identidad_App != null && validacion.Identidad_App != credenciales.Identidad)
-                {
-                    validacion.Estado_App = "INACTIVO";
-                    context.SaveChanges();
-
-                    respuestaLogin = "Dispositivo no autorizado";
-
-                    return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = respuestaLogin, Identidad = "", Estado = "" });
-                }
-
-                if (validacion != null)
-                {
-                    var estado = validacion.Estado_App == null ? "" : validacion.Estado_App.Trim();
-
-                    if (estado != "ACTIVO")
-                    {
-                        sesiones_activas++;
-                    }
-                }
-                else
-                {
-
-                    return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, nombreEmpleado="", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
-
-                    sesiones_activas++;
-                }
-
-
-                if (sesiones_activas > config.App_max_licencias)
-                {
-                    return StatusCode(StatusCodes.Status200OK,
-                       new RespuestaLogin { Error = 0, nombreEmpleado="", Response = "Se ha llegado al maximo de sesiones activas", Identidad = "", Estado = "" });
-                }
-                else
-                {
-                    if (validacion != null)
-                    {
-                        var Identidad_env = validacion.Identidad_App == null ? "" : validacion.Identidad_App;
-                        var Estado_env = validacion.Estado_App == null ? "" : validacion.Estado_App;
-                        return StatusCode(StatusCodes.Status200OK,
-                            new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, GeneraToken = validacion.Generar_Token, Estado = Estado_env });
-                    }
-                    else
-                    {
-                        return StatusCode(StatusCodes.Status200OK,
-                           new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
-                    }
-                }
+                return StatusCode(StatusCodes.Status204NoContent, new RespuestaLogin { Error = 500, nombreEmpleado = "", Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
             }
-            else
+
+            var validacion = await context.empleados.FirstOrDefaultAsync(e => e.Usuario_App.Trim().ToUpper() == credenciales.Usuario && e.Clave_App == credenciales.Clave);
+
+            if (validacion == null)
             {
-                return StatusCode(StatusCodes.Status204NoContent,
-                        new RespuestaLogin { Error = 500, nombreEmpleado = "", Response = "No se han Recibido Parametros", Identidad = "", Estado = "" });
+                return StatusCode(StatusCodes.Status200OK, new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Clave o Usuario Invalidos", Identidad = "", Estado = "" });
             }
-        } // ver estado de login del usuario 
+
+            if (validacion.Identidad_App != null && validacion.Identidad_App != credenciales.Identidad)
+            {
+                return StatusCode(StatusCodes.Status200OK, new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Dispositivo no autorizado", Identidad = "", Estado = "" });
+            }
+
+            var config = await context.config.FirstAsync();
+            var sesiones_activas = await context.empleados.CountAsync(x => x.Estado_App.Trim() == "ACTIVO");
+
+            if (validacion.Estado_App != null && validacion.Estado_App.Trim() != "ACTIVO")
+            {
+                sesiones_activas++;
+            }
+
+            if (sesiones_activas > config.App_max_licencias)
+            {
+                return StatusCode(StatusCodes.Status200OK, new RespuestaLogin { Error = 0, nombreEmpleado = "", Response = "Se ha llegado al maximo de sesiones activas", Identidad = "", Estado = "" });
+            }
+
+            var Identidad_env = validacion.Identidad_App == null ? "" : validacion.Identidad_App;
+            var Estado_env = validacion.Estado_App == null ? "" : validacion.Estado_App;
+
+            return StatusCode(StatusCodes.Status200OK, new RespuestaLogin { Error = validacion.Id, nombreEmpleado = validacion.Empleado, Response = "Credenciales validas", Identidad = Identidad_env, GeneraToken = validacion.Generar_Token, Estado = Estado_env });
+        }
 
         [HttpPost("logout")]
         public IActionResult PostLogout([FromBody] Logout credenciales)
