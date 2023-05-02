@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using servicio.modelos;
 
 namespace servicio.Controllers
@@ -448,6 +449,43 @@ namespace servicio.Controllers
             {
                 throw new Exception("No se encontro el producto");
             }
+        }
+
+
+        //FUNCION PARA REALIZAR LA BUSQUEDA DE PEDIDOS POR CLIENTE Y FECHA
+        [HttpPost("search")]
+        public IActionResult obtenerPedidos([FromBody] BusquedaPedido parametros)
+        {
+            if (parametros == null)
+            {
+                return Ok(new List<VentasHistorico>());
+            }
+
+            var pedidos = context.ventas
+                .Where(x => x.Id_cliente == parametros.Id_cliente && x.Tipo == "PE")
+                .Select(x => new VentasHistorico
+                {
+                    Id = x.Id,
+                    Fecha = x.Fecha,
+                    Id_cliente = x.Id_cliente,
+                    Id_sucursal = x.Id_sucursal,
+                    Id_vendedor = x.Id_vendedor,
+                    Total = x.Total,
+                    Numero = x.Numero,
+                    DetalleVentas = (List<Ventas_detalle>)context.ventas_detalle.Where(y => y.Id_ventas == x.Id)
+                    .Select(y => new Ventas_detalle
+                    { 
+                        Id_ventas = y.Id_ventas,
+                        Id_producto = y.Id_producto,
+                        Producto = y.Producto,
+                        Precio_u_iva = y.Precio_u_iva,
+                        cantidad = y.cantidad,
+                        Total_iva = y.Total_iva
+                    })
+                })
+                .ToList();
+
+            return Ok(pedidos);
         }
 
     }

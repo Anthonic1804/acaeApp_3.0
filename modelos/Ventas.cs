@@ -163,7 +163,5 @@ namespace servicio.modelos
         public int? Id_app_visita { get; set; }
 
         public int TipoEnvio { get; set; }
-       
-
     }
 }
