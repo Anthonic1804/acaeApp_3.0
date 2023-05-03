@@ -8,7 +8,7 @@ namespace servicio.modelos
 {
     public class RespuestaBusquedaPedido
     {
-        public int id_response { get; set; } 
+        public int error { get; set; } //ERROR
         public string response { get; set; } // RESPUESTA
         
     }

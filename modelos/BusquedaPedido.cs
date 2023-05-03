@@ -10,11 +10,11 @@ namespace servicio.modelos
     public class BusquedaPedido
     {
         //MODELO DE DATOS PARA LA BUSQUEDA DE PEDIDOS POR CLIENTE Y FECHA
-        //public int Id_vendedor { get; set; }
-        //public string Nombre_vendedor { get; set; }
+        public int Id_vendedor { get; set; }
+        public string Nombre_vendedor { get; set; }
         public int Id_cliente { get; set; }
-        //public DateTime Desde { get; set; }
-       // public DateTime Hasta { get; set; }
+        public DateTime Desde { get; set; }
+        public DateTime Hasta { get; set; }
 
     }
 }

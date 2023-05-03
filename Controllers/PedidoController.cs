@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -454,15 +455,21 @@ namespace servicio.Controllers
 
         //FUNCION PARA REALIZAR LA BUSQUEDA DE PEDIDOS POR CLIENTE Y FECHA
         [HttpPost("search")]
-        public IActionResult obtenerPedidos([FromBody] BusquedaPedido parametros)
+        public IActionResult ObtenerPedidos([FromBody] BusquedaPedido parametros)
         {
             if (parametros == null)
             {
-                return Ok(new List<VentasHistorico>());
+                return StatusCode(StatusCodes.Status400BadRequest,
+                       new RespuestaBusquedaPedido { error = 400, response = "BUSQUEDA_PEDIDO_ERROR" });
             }
 
             var pedidos = context.ventas
-                .Where(x => x.Id_cliente == parametros.Id_cliente && x.Tipo == "PE")
+                .Where(x => x.Id_cliente == parametros.Id_cliente && 
+                            x.Tipo == "PE" && 
+                            x.Fecha >= parametros.Desde && 
+                            x.Fecha <= parametros.Hasta && 
+                            x.Id_vendedor == parametros.Id_vendedor && 
+                            x.Vendedor == parametros.Nombre_vendedor)
                 .Select(x => new VentasHistorico
                 {
                     Id = x.Id,
