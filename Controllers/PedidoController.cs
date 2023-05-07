@@ -467,9 +467,7 @@ namespace servicio.Controllers
                 .Where(x => x.Id_cliente == parametros.Id_cliente && 
                             x.Tipo == "PE" && 
                             x.Fecha >= parametros.Desde && 
-                            x.Fecha <= parametros.Hasta && 
-                            x.Id_vendedor == parametros.Id_vendedor && 
-                            x.Vendedor == parametros.Nombre_vendedor)
+                            x.Fecha <= parametros.Hasta)
                 .Select(x => new VentasHistorico
                 {
                     Id = x.Id,
