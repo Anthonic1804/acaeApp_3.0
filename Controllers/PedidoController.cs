@@ -475,6 +475,7 @@ namespace servicio.Controllers
                     Id_cliente = x.Id_cliente,
                     Id_sucursal = x.Id_sucursal,
                     Id_vendedor = x.Id_vendedor,
+                    Vendedor = x.Vendedor,
                     Total = x.Total,
                     Numero = x.Numero,
                     DetalleVentas = (List<Ventas_detalle>)context.ventas_detalle.Where(y => y.Id_ventas == x.Id)
