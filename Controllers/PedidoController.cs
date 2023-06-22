@@ -132,6 +132,7 @@ namespace servicio.Controllers
                         Codigo_sucursal = cliente.CodigoSucursal, // AGREGANDO EL CODIGO SUCURSAL
                         Sucursal = cliente.NombreSucursal, // AGREGANDO EL NOMBRE SUCURSAL
                         TipoEnvio = cliente.TipoEnvio, // AGREGANDO EL TIPO DE ENVIO
+                        Tipo_documento_app = cliente.Tipo_documento_app, //AGREDANDO EL TIPO DE DOCUMENTO
                         Cliente_de_costo = "N",
                         Cliente_mayorista = "N",
                         Categoria_cliente = datoscliente.Categoria_cliente,
@@ -247,6 +248,7 @@ namespace servicio.Controllers
                         Codigo_sucursal = cliente.CodigoSucursal, // AGREGANDO EL CODIGO SUCURSAL
                         Sucursal = cliente.NombreSucursal, // AGREGANDO EL NOMBRE SUCURSAL
                         TipoEnvio = cliente.TipoEnvio, // AGREGANDO EL TIPO DE ENVIO
+                        Tipo_documento_app = cliente.Tipo_documento_app,
                         Cliente_de_costo = "N",
                         Cliente_mayorista = "N",
                         Categoria_cliente = "",
@@ -490,6 +492,27 @@ namespace servicio.Controllers
                     })
                 })
                 .ToList();
+
+            return Ok(pedidos);
+        }
+
+        //FUNCNION PARA GENERAR EL REPORTE DE PEDIDOS DIARIOS POR VENDEDOR
+        [HttpPost("Reporte")]
+        public IActionResult ObtenerReporte([FromBody] ReportePedidos parametros)
+        {
+            if (parametros == null) {
+                return StatusCode(StatusCodes.Status400BadRequest,
+                    new RespuestaBusquedaPedido { error = 400, response = "ERROR_REPORTE" });
+            }
+
+            var pedidos = context.ventas
+                .Where(x => x.Id_vendedor == parametros.Idvendedor && x.Fecha == parametros.Fecha && x.Tipo == "PE")
+                .Select(x => new ReporteDatos {
+                    Cliente = x.Cliente,
+                    Sucursal = x.Sucursal,
+                    Total = x.Total
+                }).ToList();
+
 
             return Ok(pedidos);
         }

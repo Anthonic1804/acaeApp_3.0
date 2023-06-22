@@ -20,6 +20,7 @@ namespace servicio.modelos
         public string CodigoSucursal { get; set; }
         public string NombreSucursal {get; set;}
         public int TipoEnvio { get; set; }
+        public string Tipo_documento_app { get; set; }
 
         public int Idvendedor { get; set; }
         public string Vendedor { get; set; }

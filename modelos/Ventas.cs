@@ -158,10 +158,10 @@ namespace servicio.modelos
         public DateTime? Fecha_envio { get; set; }
         public decimal Descuento_gas { get; set; }
 
-
-
         public int? Id_app_visita { get; set; }
 
-        public int TipoEnvio { get; set; }
+        public int TipoEnvio { get; set; }//TIPO DE ENVIO SI RUTA O ENCOMIENDA
+        public string Tipo_documento_app { get; set; } //TIPO DE DOCUMENTO SI FC O CF
+
     }
 }
