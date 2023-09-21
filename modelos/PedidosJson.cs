@@ -24,6 +24,7 @@ namespace servicio.modelos
 
         public int Idvendedor { get; set; }
         public string Vendedor { get; set; }
+        public string Terminos { get; set; }
         public int Idapp { get; set; }
         public List<DetallePedido> detalle { get; set; }
     }

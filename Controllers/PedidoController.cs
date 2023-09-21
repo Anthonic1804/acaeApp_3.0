@@ -143,7 +143,7 @@ namespace servicio.Controllers
                         Nit = datoscliente.Nit,
                         Nrc = datoscliente.Nrc,
                         Giro = datoscliente.Giro,
-                        Terminos = "Contado",
+                        Terminos = cliente.Terminos, //TERMINOS DEL PEDIDO
                         Plazo = 0,
                         Id_ruta = idruta,
                         Ruta = nombreruta,
@@ -259,7 +259,7 @@ namespace servicio.Controllers
                         Nit = "",
                         Nrc = "",
                         Giro = "",
-                        Terminos = "Contado",
+                        Terminos = cliente.Terminos, //TERMINOS DEL CLIENTE
                         Plazo = 0,
                         Id_ruta = 0,
                         Ruta = "",
