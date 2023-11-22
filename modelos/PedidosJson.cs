@@ -25,6 +25,7 @@ namespace servicio.modelos
         public int Idvendedor { get; set; }
         public string Vendedor { get; set; }
         public string Terminos { get; set; }
+        public string FechaCreado { get; set; } //FECHA OBTENIDA DESDE EL DISPOSITIVO DE LA APP
         public int Idapp { get; set; }
         public List<DetallePedido> detalle { get; set; }
     }

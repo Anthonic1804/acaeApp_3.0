@@ -23,6 +23,7 @@
         public int Idunidad { get; set; }
         public int Idtalla { get; set; }
         public int Idprecio { get; set; }
+        public string FechaCreado { get; set; } //NUEVO PARAMETRO 22/11/2023
 
     }
 }

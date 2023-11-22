@@ -29,7 +29,9 @@ namespace servicio.Controllers
                 {
                     try
                     {
-                        var fecha = DateTime.Now;//obtenemos la fecha de la pc
+                        //var fecha = DateTime.Now;//obtenemos la fecha de la pc
+
+                        var fecha = data.FechaCreado;
 
 
 
@@ -52,7 +54,7 @@ namespace servicio.Controllers
                         context.SaveChanges(); //actualizo el numero de pedido en la bd
                         var cabezera = this.getClientInfo(data, iva); //obtenemos el detalle para insertar en la tabla ventas
                         cabezera.Numero = nun_pedido.ToString(); //agrego el numero del pedido ala nueva ventas
-                        cabezera.Fecha = fecha;//agrego la fecha ala nueva ventas
+                        cabezera.Fecha = Convert.ToDateTime(fecha);//agrego la fecha ala nueva ventas
                         context.Add(cabezera);
                         context.SaveChanges(); //inserta el encabezado del pedido
                         foreach (DetallePedido dt in data.detalle)
@@ -122,7 +124,7 @@ namespace servicio.Controllers
                         Serie = "",
                         Letra = "",
                         Cortesia = "",
-                        Fecha = DateTime.Now,
+                        Fecha =  Convert.ToDateTime(cliente.FechaCreado), //DateTime.Now,
                         Id_cliente = cliente.Idcliente,
                         Id_hoja_de_carga = 0,
                         num_hoja_de_carga = Convert.ToDecimal(0),
@@ -184,7 +186,7 @@ namespace servicio.Controllers
                         Anulado = '\0',
                         Id_doc = 0,
                         Documento = "",
-                        Fecha_vencimiento = DateTime.Now,
+                        Fecha_vencimiento = Convert.ToDateTime(cliente.FechaCreado),
                         Devolucion_efectivo = "",
                         aplica_abono_id_cxc = 0,
                         aplica_abono_id_doc = 0,
@@ -193,7 +195,7 @@ namespace servicio.Controllers
                         Id_usuario = 0,
                         Usuario = "",
                         PC = "APP MOVIL",
-                        Fecha_hora_proceso = DateTime.Now,
+                        Fecha_hora_proceso = Convert.ToDateTime(cliente.FechaCreado),
                         Prima_credito_plazo = "NO",
                         Id_turno = 99,
                         Id_turno2 = 0,
@@ -238,7 +240,7 @@ namespace servicio.Controllers
                         Letra = "",
                         Degustacion = "",
                         Cortesia = "",
-                        Fecha = DateTime.Now,
+                        Fecha = Convert.ToDateTime(cliente.FechaCreado),
                         Id_cliente = 0,
                         Id_hoja_de_carga = 0,
                         num_hoja_de_carga = Convert.ToDecimal(0),
@@ -300,7 +302,7 @@ namespace servicio.Controllers
                         Anulado = '\0',
                         Id_doc = 0,
                         Documento = "",
-                        Fecha_vencimiento = DateTime.Now,
+                        Fecha_vencimiento = Convert.ToDateTime(cliente.FechaCreado),
                         Devolucion_efectivo = "",
                         aplica_abono_id_cxc = 0,
                         aplica_abono_id_doc = 0,
@@ -309,7 +311,7 @@ namespace servicio.Controllers
                         Id_usuario = 0,
                         Usuario = "",
                         PC = "APP MOVIL",
-                        Fecha_hora_proceso = DateTime.Now,
+                        Fecha_hora_proceso = Convert.ToDateTime(cliente.FechaCreado),
                         Prima_credito_plazo = "NO",
                         Id_turno = 99,
                         Id_turno2 = 0,
@@ -405,7 +407,7 @@ namespace servicio.Controllers
                 {
                     Id_ventas = 0,
                     Tipo = "PE",
-                    Fecha = DateTime.Now,
+                    Fecha = Convert.ToDateTime(detalle.FechaCreado),
                     numero_caja = 0,
                     Id_cliente = 0,
                     Id_sucursal = 0,
