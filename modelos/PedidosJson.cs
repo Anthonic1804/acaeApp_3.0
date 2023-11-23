@@ -26,6 +26,7 @@ namespace servicio.modelos
         public string Vendedor { get; set; }
         public string Terminos { get; set; }
         public string FechaCreado { get; set; } //FECHA OBTENIDA DESDE EL DISPOSITIVO DE LA APP
+        public string HoraProceso { get; set; } //TIMESTAMP DE PEDIDO CREADO
         public int Idapp { get; set; }
         public List<DetallePedido> detalle { get; set; }
     }
