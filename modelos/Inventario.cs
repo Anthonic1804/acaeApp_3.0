@@ -103,8 +103,8 @@ namespace servicio.modelos
         public decimal Precio_viñeta_iva { get; set; }
         public int Fraccion_quintal { get; set; }
 
-        public string? Foto_archivo { get; set; }
-        public byte[]? Foto_imagen { get; set; }
+        //public string? Foto_archivo { get; set; }
+        //public byte[]? Foto_imagen { get; set; }
         public char Combustible { get; set; }
         public char Cesc { get; set; }
         public char Inventariado { get; set; }

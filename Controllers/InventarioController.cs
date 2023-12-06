@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using servicio.custom;
 using servicio.modelos;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace servicio.Controllers
 {
@@ -22,12 +24,39 @@ namespace servicio.Controllers
         }
 
         [HttpGet("cantidad")]
-        public String GetCantidad()
+        public IActionResult GetCantidad()
         {
+            try
+            {
+                using (var command = context.Database.GetDbConnection().CreateCommand())
+                {
+                    command.CommandText = "ObtenerCantidadInventarioApp";
+                    command.CommandType = CommandType.StoredProcedure;
 
-            int cantidad = context.inventario.ToList().Count();
+                    context.Database.OpenConnection();
 
-            return cantidad.ToString();
+                    using (var result = command.ExecuteReader())
+                    {
+                        if (result.Read())
+                        {
+                            int cantidad = result.GetInt32(result.GetOrdinal("Cantidad"));
+                            return Ok(cantidad.ToString());
+                        }
+                        else
+                        {
+                            return NotFound("NO SE ENCONTRARON REGISTROS");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"ERROR DE SERVIDOR: {ex.Message}");
+            }
+            finally
+            {
+                context.Database.CloseConnection();
+            }
         }
 
         [HttpGet("{vinicio}/{vlongitud}")]
@@ -63,21 +92,55 @@ namespace servicio.Controllers
                 x.Excedente = x.Excedente == null ? null : x.Excedente.Trim();
                 x.cliente = x.cliente == null ? null : x.cliente.Trim();
                 x.Condicion_mercado = x.Condicion_mercado == null ? null : x.Condicion_mercado.Trim();
-                x.Foto = "";
-                x.Foto_archivo = null;
-                x.Foto_imagen = null;
+                //x.Foto = "";
+                //x.Foto_archivo = null;
+                //x.Foto_imagen = null;
             });
 
             return Ok(inventario);
         } //retorna el inventario en formato json
 
-        [HttpGet("precios/cantidad")]
-        public String GetPreciosCantidad()
+
+        [HttpGet("precios")]
+        public IActionResult obtenerPreciosEscalas()
         {
+            try {
 
-            int cantidad = context.Inventario_precios.ToList().Count();
+                List<Inventario_precios> InventarioPrecioLista = new List<Inventario_precios>();
 
-            return cantidad.ToString();
+                using (var command = context.Database.GetDbConnection().CreateCommand()) {
+                    command.CommandText = "INVENTARIO_PRECIOS_APP";
+                    command.CommandType = CommandType.StoredProcedure;
+
+                    context.Database.OpenConnection();
+                    using (var result = command.ExecuteReader()) {
+                        while (result.Read()) {
+                            Inventario_precios item = new Inventario_precios();
+
+                            item.Id = result.GetInt32(result.GetOrdinal("Id"));
+                            item.id_inventario = result.GetInt32(result.GetOrdinal("id_inventario"));
+                            item.Nombre = result.GetString(result.GetOrdinal("nombre"));
+                            item.cantidad = result.GetDecimal(result.GetOrdinal("cantidad"));
+                            item.porcentaje = result.GetDecimal(result.GetOrdinal("porcentaje"));
+                            item.precio = result.GetDecimal(result.GetOrdinal("precio"));
+                            item.precio_iva = result.GetDecimal(result.GetOrdinal("precio_iva"));
+
+                            InventarioPrecioLista.Add(item);
+                        }
+                    }
+                }
+
+                return Ok(InventarioPrecioLista);
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"ERROR DE SERVIDOR: {ex.Message}");
+            }
+            finally
+            {
+                context.Database.CloseConnection();
+            }
         }
 
         [HttpGet("precios/{vinicio}/{vlongitud}")]
@@ -88,7 +151,7 @@ namespace servicio.Controllers
 
             var inventario_precios = context.Inventario_precios.OrderBy(x => x.Id).Skip(inicio).Take(longitud).ToList();
 
-            inventario_precios.ForEach(x =>
+            /*inventario_precios.ForEach(x =>
             {
                 x.Codigo_producto = x.Codigo_producto == null ? null : x.Codigo_producto.Trim();
                 x.Nombre = x.Nombre == null ? null : x.Nombre.Trim();
@@ -96,7 +159,7 @@ namespace servicio.Controllers
                 x.Unidad = x.Unidad == null ? null : x.Unidad.Trim();
                 x.Unidad = x.Unidad == null ? null : x.Unidad.Trim();
             });
-
+            */
             return Ok(inventario_precios);
         } 
 

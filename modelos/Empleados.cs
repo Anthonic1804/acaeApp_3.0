@@ -42,7 +42,7 @@ namespace servicio.modelos
         public char Produccion { get; set; }
         public char Despacho { get; set; }
         public char Borrado_logico { get; set; }
-        public int? Codigo_touch { get; set; }
+        public string? Codigo_touch { get; set; } //SE CAMBIO DE INT A STRING POR ESTRUCTURA DE LA BD
         public string? Usuario_App { get; set; }
         public string? Clave_App { get; set; }
         public string? Identidad_App { get; set; }

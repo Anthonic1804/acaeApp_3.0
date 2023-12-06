@@ -49,8 +49,11 @@ namespace servicio.Controllers
                         {
                         }
                         var iva = (configall.Iva / 100) + 1; //iva
-                        int nun_pedido = Convert.ToInt32((configall.Pe_correlativo + 1)); //obtenemos el pedido que con el que se insertara el pedido
+                        //SE CAMBIO EL TIPO DE DATO, DE INT A LONG PARA EVITAR EL ERROR CON LOS CORRELATIVOS
+                        //DE FARMACIA EL AGUILA
+                        long nun_pedido = Convert.ToInt64((configall.Pe_correlativo + 1)); //obtenemos el pedido que con el que se insertara el pedido
                         configall.Pe_correlativo = Convert.ToDecimal(nun_pedido);
+
                         context.SaveChanges(); //actualizo el numero de pedido en la bd
                         var cabezera = this.getClientInfo(data, iva); //obtenemos el detalle para insertar en la tabla ventas
                         cabezera.Numero = nun_pedido.ToString(); //agrego el numero del pedido ala nueva ventas
